@@ -1,0 +1,1 @@
+(function(){var s=document.querySelectorAll(".slides div"),i=0;setInterval(function(){s[i].classList.remove("on");i=(i+1)%s.length;s[i].classList.add("on")},4500)})();
