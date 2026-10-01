@@ -33,3 +33,9 @@ e("dgreg").innerHTML=(bn?"ইংরেজি":"English")+": <b>"+g+"</b>";
 e("dbn").innerHTML=(bn?"বাংলা":"Bangla")+": <b>"+bs+"</b>";
 e("dhj").innerHTML=(bn?"হিজরি":"Hijri")+": <b>"+hs+(bn?" হিজরি":" AH")+"</b>"+(ar?" <span dir=\"rtl\">("+ar+")</span>":"")}
 render();setInterval(render,1000)})();
+(function(){var r=document.documentElement,b=document.getElementById("theme"),mq=window.matchMedia("(prefers-color-scheme: dark)");
+function isDark(){var t=r.getAttribute("data-theme");return t?t==="dark":mq.matches}
+function icon(){b.textContent=isDark()?"☀️":"🌙"}
+try{var s=localStorage.getItem("ccti-theme");if(s)r.setAttribute("data-theme",s)}catch(e){}
+b.onclick=function(){var n=isDark()?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("ccti-theme",n)}catch(e){}icon()};
+if(mq.addEventListener)mq.addEventListener("change",icon);icon()})();
