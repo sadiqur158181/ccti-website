@@ -16,3 +16,20 @@ function go(d){if(d>0&&t.scrollLeft+t.clientWidth>=t.scrollWidth-4)t.scrollTo({l
 function chk(){var o=t.scrollWidth>t.clientWidth+4;p.style.display=n.style.display=o?"":"none"}
 p.onclick=function(){go(-1)};n.onclick=function(){go(1)};t.onmouseenter=function(){hov=1};t.onmouseleave=function(){hov=0};
 setInterval(function(){if(!hov&&t.scrollWidth>t.clientWidth+4)go(1)},4000);window.addEventListener("resize",chk);chk()})();
+(function(){var TZ="Asia/Dhaka",HIJRI_OFFSET=0; /* হিজরি তারিখ ১ দিন কম-বেশি দেখালে HIJRI_OFFSET এ -1 বা 1 দিন */
+var BM={bn:["বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন","কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"],en:["Boishakh","Joishtho","Asharh","Srabon","Bhadro","Ashwin","Kartik","Agrahayan","Poush","Magh","Falgun","Choitro"]};
+var BD="০১২৩৪৫৬৭৮৯";function bd(s){return String(s).replace(/\d/g,function(c){return BD[c]})}
+function bangla(y,m,d){var cur=Date.UTC(y,m-1,d),st=Date.UTC(y,3,14),by,off;if(cur>=st){by=y-593;off=Math.round((cur-st)/864e5)}else{by=y-594;off=Math.round((cur-Date.UTC(y-1,3,14))/864e5)}
+var g=by+594,leap=g%4===0&&(g%100!==0||g%400===0),L=[31,31,31,31,31,31,30,30,30,30,leap?30:29,30],i=0;while(off>=L[i]){off-=L[i];i++}return{d:off+1,m:i,y:by}}
+function hijri(loc,dt){try{var p={};new Intl.DateTimeFormat(loc,{day:"numeric",month:"long",year:"numeric",timeZone:TZ}).formatToParts(dt).forEach(function(x){p[x.type]=x.value});return p.day+" "+p.month+" "+p.year}catch(e){return""}}
+function render(){var bn=document.documentElement.lang!=="en",now=new Date(),loc=bn?"bn-BD":"en-GB",e=function(i){return document.getElementById(i)};
+var tm=new Intl.DateTimeFormat(bn?"bn-BD":"en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:TZ}).format(now);
+var pt={};new Intl.DateTimeFormat("en-CA",{year:"numeric",month:"numeric",day:"numeric",timeZone:TZ}).formatToParts(now).forEach(function(x){pt[x.type]=+x.value});
+var g=new Intl.DateTimeFormat(loc,{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:TZ}).format(now);
+var b=bangla(pt.year,pt.month,pt.day),bs=b.d+" "+BM[bn?"bn":"en"][b.m]+" "+b.y+(bn?" বঙ্গাব্দ":" BS");if(bn)bs=bd(bs);
+var hd=new Date(now.getTime()+HIJRI_OFFSET*864e5),hs=hijri(bn?"bn-BD-u-ca-islamic-umalqura-nu-beng":"en-u-ca-islamic-umalqura",hd),ar=hijri("ar-SA-u-ca-islamic-umalqura",hd);
+e("dtime").innerHTML='🕒 <span class="t">'+tm+'</span>';
+e("dgreg").innerHTML=(bn?"ইংরেজি":"English")+": <b>"+g+"</b>";
+e("dbn").innerHTML=(bn?"বাংলা":"Bangla")+": <b>"+bs+"</b>";
+e("dhj").innerHTML=(bn?"হিজরি":"Hijri")+": <b>"+hs+(bn?" হিজরি":" AH")+"</b>"+(ar?" <span dir=\"rtl\">("+ar+")</span>":"")}
+render();setInterval(render,1000)})();

@@ -81,4 +81,4 @@ img.av{object-fit:cover;display:block;padding:0}.stats{position:relative;z-index
 .track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px}.track::-webkit-scrollbar{display:none}
 .tcard{flex:0 0 210px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 14px;text-align:center}
 .tcard img{width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid var(--acc);display:block;margin:0 auto 10px}.tcard h4{margin:0;font-size:1.05rem}.tcard p{margin:2px 0 0;color:var(--mut);font-size:.9rem}
-.credit{margin-top:6px;font-size:.85rem}
+.credit{margin-top:6px;font-size:.85rem}.datebar{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 20px;background:var(--card);border-bottom:1px solid var(--line);padding:7px 12px;font-size:.86rem;color:var(--mut)}.datebar b{color:var(--tx)}.datebar .t{color:var(--pri);font-weight:700;font-variant-numeric:tabular-nums}
